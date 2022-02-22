@@ -1,32 +1,11 @@
 
 //You can also log multiple values at once like this
 
-
-//Array of enemy names
-//var enemy.names = ["Roborto", "Amy Android", "Robo Trumble"];
-//function to generate random numbers for health and attack
 var randomNumber = function(min, max){
   var value = Math.floor(Math.random() * (max - min + 1) + min);
 
   return value
 };
-
-
-
-
-//Logs to show arrays in console
-/*console.log(enemy.names);
-console.log(enemy.names[0]);
-console.log(enemy.names[1]);
-console.log(enemy.names[2]);
-console.log(enemy.names.length);*/
-
-// Game States
-// "WIN" - Player robot has defeated all enemy-robots.
-//      * Fight all enemy-robots
-//      *Defeat each enemy-robot
-// "LOSE" - Player robot's health is zero or less
-
 //Function to Fight or Skip / reduce null values
 var fightOrSkip = function(){
   //ask player if they'd like to fight or skip using fightOrSkip() Function
@@ -48,7 +27,7 @@ var fightOrSkip = function(){
     if(confirmSkip){
       window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
       //subtract playerMoney for skipping
-      playerInfo.money = playerInfo.money - 10;
+      playerInfo.money = Math.max(0, playerInfo.money - 10);
       
       // return true if player wants to skip
       return true;
@@ -64,9 +43,7 @@ var fight = function(enemy) {
     isPlayerTurn = false;
   }
     // reset player stats
-    playerInfo.health = 100;
-    playerInfo.attack = 10;
-    playerInfo.money = 10;
+ 
     
     
     while (playerInfo.health > 0 && enemy.health > 0) {
@@ -225,24 +202,36 @@ else{
   endGame();
 };
 // To end the game
-var endGame = function(){
-  // if player is still alive, player wins!
-  if(playerInfo.health > 0){
-    window.alert("Great job, youve survived the game! You now have a score of " + playerInfo.money + ".");
+var endGame = function() {
+  window.alert("The game has now ended. Let's see how you did!");
+
+  // check localStorage for high score, if it's not there, use 0
+  var highScore = localStorage.getItem("highscore");
+  if (highScore === null) {
+    highScore = 0;
   }
-  else{
-    window.alert("You've lost your robot in battle.");
+  // if player has more money than the high score, player has new high score!
+  if (playerInfo.money > highScore) {
+    localStorage.setItem("highscore", playerInfo.money);
+    localStorage.setItem("name", playerInfo.name);
+
+    alert(playerInfo.name + " now has the high score of " + playerInfo.money + "!");
+  } 
+  else {
+    alert(playerInfo.name + " did not beat the high score of " + highScore + ". Maybe next time!");
   }
-  //ask player if they'd like to play again
-var playAgainConfirm = window.confirm("Would you like to play again?");
-  if(playAgainConfirm){
-    //restart the game
+
+  // ask player if they'd like to play again
+  var playAgainConfirm = window.confirm("Would you like to play again?");
+
+  if (playAgainConfirm) {
     startGame();
-  }
-  else{
+  } 
+  else {
     window.alert("Thank you for playing Robot Gladiators! Come back soon!");
   }
 };
+
 //Shop Function (GLOBAL)
 var shop = function(){
   //ask player what they'd like to do
