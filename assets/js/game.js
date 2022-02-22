@@ -1,5 +1,4 @@
 
-
 //You can also log multiple values at once like this
 
 
@@ -11,6 +10,7 @@ var randomNumber = function(min, max){
 
   return value
 };
+
 
 
 
@@ -139,7 +139,7 @@ var getPlayerName = function(){
   //************************
   // ADD THE LOOP HERE WITH PROMPT AND CONDITION
   while(name === "" || name === null){
-    name = prompt("What is your robot's name?")
+    name = prompt("What is your robot's name?");
   }
   
   console.log("Your robot's name is " + name);
@@ -170,7 +170,7 @@ var playerInfo = {
       this.money -= 7;
     }
     else{
-      window.alert("You have insufficient funds!")
+      window.alert("You have insufficient funds!");
     }
     }
  };
